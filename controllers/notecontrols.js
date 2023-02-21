@@ -3,7 +3,7 @@ const note = require("../model/notes");
 const createNote = async (req, res)=>{
     const { title, body } = req.body;
     if(title && body){
-        const result = note.create({title, body})
+        const result = await note.create({title, body})
         if (result){
             res.status(200).json({message: "note created"})
             console.log(result)
