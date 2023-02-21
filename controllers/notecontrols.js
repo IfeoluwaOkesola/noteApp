@@ -5,7 +5,7 @@ const createNote = async (req, res)=>{
     if(title && body){
         const result = await note.create({title, body})
         if (result){
-            res.status(200).json({message: "note created"})
+            res.status(200).json({message: result})
             console.log(result)
         }else{
             res.status(404).json({message: error})

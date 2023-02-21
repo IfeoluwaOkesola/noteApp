@@ -15,7 +15,7 @@ const registerUser = async (req, res) => {
     const hash = bcrypt.hashSync(password, saltRounds);
     const result = await user.create({ fullname, email, password: hash });
     if (result) {
-      res.status(200).json({ message: 'user created' });
+      res.status(200).json({  message: result });
     } else {
       res.status(404).json({ message: console.error() });
     }
