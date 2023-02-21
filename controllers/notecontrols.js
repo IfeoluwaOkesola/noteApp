@@ -15,17 +15,17 @@ const createNote = async (req, res)=>{
     }
 }
 
-const readNote = (req,res)=>{
+const readNote = async (req,res)=>{
     const notes = req.params.id;
 
-    note.findById(notes)
-    .then((result)=>{
+    const result = await note.findById(notes)
+    if (result){
         res.status(200).json({"title": result.title, "note": result.body})
         console.log(result)
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
+    }else{
+        res.status(200).json({message: "note does not exist"})
+    }
+   
 }
 
 const updateNote = (req,res)=>{
