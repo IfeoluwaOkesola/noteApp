@@ -13,45 +13,41 @@ const registerUser = async (req, res) => {
 
   if (fullname && email && password) {
     const hash = bcrypt.hashSync(password, saltRounds);
-    user
-      .create({ fullname, email, password: hash })
-      .then((result) => {
-        res.status(200).json(result);
-        console.log(result);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    const result = await user.create({ fullname, email, password: hash });
+    if (result) {
+      res.status(200).json({ message: 'user created' });
+    } else {
+      res.status(404).json({ message: console.error() });
+    }
   } else {
+    res.json({ message: 'enter user details' });
     console.log('enter user details');
   }
 };
 
 const userlogin = async (req, res) => {
-  const { fullname, email, password } = req.body;
-  if (fullname && email && password) {
-    user
-      .findOne({
-        email: email,
-      })
-      .then((result) => {
-        if (result) {
-          console.log(result);
-          const valid = bcrypt.compare(password, result.password);
-          if (valid) {
-            const token = jwt.sign({ result }, secret);
-            res.status(200).json({ message: token });
-            //console.log(result)
-          } else {
-            res.json({ message: 'incorrect password' });
-            console.log('incorrect password');
-          }
-        } else {
-          res.status(404).json({ message: 'user not found' });
-        }
-      });
+  const { email, password } = req.body;
+  if (email && password) {
+    const result = await user.findOne({
+      email: email,
+    });
+    if (result) {
+      console.log(result);
+      const valid = bcrypt.compare(password, result.password);
+      if (valid) {
+        const token = jwt.sign({ result }, secret);
+        res.status(200).json({ message: token });
+        //console.log(result)
+      } else {
+        res.json({ message: 'incorrect password' });
+        console.log('incorrect password');
+      }
+    } else {
+      res.json({ message: 'user not found' });
+    }
   } else {
-    console.log('no user details');
+    res.json({ message: 'enter user details' });
+    console.log('enter user details');
   }
 };
 

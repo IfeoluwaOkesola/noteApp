@@ -1,16 +1,18 @@
 const note = require("../model/notes");
 
-const createNote = (req, res)=>{
-    const notes = new note(req.body);
-
-    notes.save()
-    .then((result)=>{
-        res.status(200).json({message: "note created"})
-        console.log(result)
-    })
-    .catch((error)=>{
-        console.log(error)
-    })
+const createNote = async (req, res)=>{
+    const { title, body } = req.body;
+    if(title && body){
+        const result = note.create({title, body})
+        if (result){
+            res.status(200).json({message: "note created"})
+            console.log(result)
+        }else{
+            res.status(404).json({message: error})
+        }
+    }else{
+        res.json({message: "Cannot save empty note"})
+    }
 }
 
 const readNote = (req,res)=>{
