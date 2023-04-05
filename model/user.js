@@ -16,8 +16,8 @@ const userSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true,
-  },
+    required: true
+  }
 });
 
 //userSchema.plugin(require('mongoose-bcrypt'), { rounds: 10 });

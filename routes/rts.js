@@ -4,7 +4,7 @@ const { registerUser, userlogin } = require('../controllers/usercontrols');
 
 const routeManager = express.Router();
 
-routeManager.post('/', registerUser);
+routeManager.post('/register', registerUser);
 routeManager.post('/login', userlogin);
 routeManager.post('/note', createNote)
 routeManager.get('/note/:id', readNote)
