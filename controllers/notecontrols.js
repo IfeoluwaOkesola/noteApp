@@ -17,7 +17,6 @@ const createNote = async (req, res)=>{
 
 const readNote = async (req,res)=>{
     const notes = req.params.id;
-
     const result = await note.findById(notes)
     if (result){
         res.status(200).json({"title": result.title, "note": result.body})
@@ -25,6 +24,7 @@ const readNote = async (req,res)=>{
     }else{
         res.status(200).json({message: "note does not exist"})
     }
+
    
 }
 
